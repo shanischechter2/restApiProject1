@@ -1,12 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,getusersover} = require('./database'); 
 
 
 
 const app = express();
 
+
+
+
 app.use(bodyParser.json());
+app.use(cors({
+    origin: 'http://127.0.0.1:5500',
+}));
+
+
 
 app.get('/items', (req, res) => {
     getItems((err, items) => {
@@ -16,6 +26,8 @@ app.get('/items', (req, res) => {
         res.json(items);
     });
 });
+
+
 app.get('/items/getsum', (req, res) => {
     getsumallItems((err, items) => {
         if (err) {
