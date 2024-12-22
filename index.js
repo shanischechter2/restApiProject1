@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems} = require('./database'); 
+const { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,getusersover} = require('./database'); 
 
 
 
@@ -24,6 +24,21 @@ app.get('/items/getsum', (req, res) => {
         res.json(items);
     });
 });
+app.get('/items/getb', (req, res) => {
+    const { blan } = req.body; 
+
+    if (!blan) { 
+        return res.status(400).json({ error: "blan is required." });
+    }
+
+    getusersover(blan,(err, items) => {
+        if (err) {
+            return res.status(500).json({ error: "Failed items." });
+        }
+        res.json(items);
+    });
+});
+
 app.post('/items', (req, res) => {
     const { name,id } = req.body; 
     

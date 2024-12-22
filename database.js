@@ -24,6 +24,17 @@ function getItems(callback) {
         callback(null, rows); 
     });
 }
+function getusersover(blan,callback) {
+    db.all("SELECT * FROM items WHERE blan > ?", [blan], (err, rows) => {
+        console.log(rows);
+        if (err) {
+            console.error("Error getting items:", err);
+            return callback(err, null);
+        }
+        console.log(rows);
+        callback(null, rows); 
+    });
+}
 //פעולה שמחזירה את סכום כל היתרות בבנק
 function getsumallItems(callback) {
     db.all("SELECT SUM(blan) FROM items", [], (err, row) => {
@@ -181,4 +192,4 @@ function deleteAllItems(callback)
         
 }
 
-module.exports = { getItems, addItem ,deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems};
+module.exports = { getItems, addItem ,deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,getusersover};
