@@ -26,6 +26,14 @@ app.get('/items', (req, res) => {
         res.json(items);
     });
 });
+app.delete('/items/all', (req, res) => {
+    deleteAllItems((err, items) => {
+        if (err) {
+            return res.status(500).json({ error: "Failed to retrieve items." });
+        }
+        res.json(items);
+    });
+});
 
 
 app.get('/items/getsum', (req, res) => {
@@ -37,13 +45,13 @@ app.get('/items/getsum', (req, res) => {
     });
 });
 app.get('/items/getb', (req, res) => {
-    const { blan } = req.body; 
+    const { balance } = req.body; 
 
-    if (!blan) { 
-        return res.status(400).json({ error: "blan is required." });
+    if (!balance) { 
+        return res.status(400).json({ error: "balance is required." });
     }
 
-    getusersover(blan,(err, items) => {
+    getusersover(balance,(err, items) => {
         if (err) {
             return res.status(500).json({ error: "Failed items." });
         }
@@ -70,18 +78,18 @@ app.post('/items', (req, res) => {
     });
 });
 app.post('/items/put', (req, res) => {
-    const { blan,id } = req.body; 
+    const { balance,id } = req.body; 
 
-    if (!blan) { 
-        return res.status(400).json({ error: "blan is required." });
+    if (!balance) { 
+        return res.status(400).json({ error: "balance is required." });
     }
     if (!id) { 
         return res.status(400).json({ error: "id is required." });
     }
 
-    addBlanToSpcUser(id,blan, (err, item) => {
+    addBlanToSpcUser(id,balance, (err, item) => {
         if (err) {
-            return res.status(500).json({ error: "Failed to add blan" });
+            return res.status(500).json({ error: "Failed to add balance" });
         }
         res.status(201).json(item);
     });
@@ -92,19 +100,19 @@ app.delete('/items', (req, res) => {
     if (!id) { 
         return res.status(400).json({ error: "id is required." });
     }
-
+    
     deleteItem(id,(err, item) => {
         if (err) {
-            return res.status(500).json({ error: "Failed to add blan" });
+            return res.status(500).json({ error: "Failed to add balance" });
         }
         res.status(201).json(item);
     });
 });
 app.patch('/items', (req, res) => {
-    const { id1,id2,blan } = req.body; 
+    const { id1,id2,balance } = req.body; 
 
-    if (!blan) { 
-        return res.status(400).json({ error: "blan is required." });
+    if (!balance) { 
+        return res.status(400).json({ error: "balance is required." });
     }
     if (!id1) { 
         return res.status(400).json({ error: "id1 to trans from is required." });
@@ -113,9 +121,9 @@ app.patch('/items', (req, res) => {
         return res.status(400).json({ error: "id2 to trans to required." });
     }
 
-    transBlanToSpcUser(id1,id2,blan, (err, item) => {
+    transBlanToSpcUser(id1,id2,balance, (err, item) => {
         if (err) {
-            return res.status(500).json({ error: "Failed to add blan" });
+            return res.status(500).json({ error: "Failed to add balance" });
         }
         res.status(201).json(item);
     });

@@ -10,7 +10,36 @@
     <div class="container">
          <button onclick="gets()">Fetch Items</button>
     <ul id="list"></ul>
+    <button onclick="getsumall()">sum Items</button>
+    <h2 id="list2"></h2>
+    <div>
+         <input type="text" id="useridadd" placeholder="user id"/>
+    <input type="text" id="useradd" placeholder="the name"/>
+     <button onclick="adduser()">add user</button>
+     <ul id="addlist"></ul>
     </div>
+
+   <div>
+      <input type="text" id="useridaddm" placeholder="user id"/>
+     <input type="text" id="useraddm" placeholder="the amoute to add"/>
+      <button onclick="addMoneyuser()">add m to user</button>
+   </div>
+    
+   <div>
+      <input type="text" id="deluser" placeholder="user id"/>
+       <button onclick="deleteuser()">delete</button>
+   </div>
+    
+   <div>
+     <input type="text" id="userid1m" placeholder="user id1"/>
+       <input type="text" id="userid2m" placeholder="user id2"/>
+       <input type="number" id="m" placeholder="the amoute to add"/>
+        <button onclick="tran()">add m to user</button>
+   </div>
+      
+    </div>
+    
+    
    
 
     <!-- Include Axios before your custom JavaScript -->
