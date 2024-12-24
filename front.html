@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/typescript@latest/lib/typescript.js"></script>
     <title>Items List</title>
 </head>
 <body>
@@ -42,8 +43,31 @@
     
    
 
-    <!-- Include Axios before your custom JavaScript -->
+   
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="fronted.js"></script>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Fetch the TypeScript source file
+                const response = await fetch('fronted.ts');
+                const tsCode = await response.text();
+
+                // Transpile TypeScript to JavaScript
+                const jsCode = ts.transpile(tsCode, {
+                    module: ts.ModuleKind.None,  // Disable module system (to avoid CommonJS/ES6 modules)
+                    target: ts.ScriptTarget.ES5   // Transpile to ES5 for compatibility with browsers
+                });
+
+                // Create a new script tag to inject the transpiled JS into the document
+                const scriptTag = document.createElement('script');
+                scriptTag.type = 'text/javascript';
+                scriptTag.innerHTML = jsCode;  // Insert the transpiled JavaScript into the script tag
+                document.body.appendChild(scriptTag);  // Append the script tag to the body
+            } catch (error) {
+                console.error('Error transpiling TypeScript:', error);
+            }
+        });
+    </script>
 </body>
 </html>
