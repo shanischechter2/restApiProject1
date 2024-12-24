@@ -34,7 +34,7 @@
    <div>
      <input type="text" id="userid1m" placeholder="user id1"/>
        <input type="text" id="userid2m" placeholder="user id2"/>
-       <input type="number" id="m" placeholder="the amoute to add"/>
+       <input type="number" id="amuonttotranc" placeholder="the amoute to add"/>
         <button onclick="tran()">add m to user</button>
    </div>
       
@@ -49,21 +49,20 @@
     <script>
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                // Fetch the TypeScript source file
+         
                 const response = await fetch('fronted.ts');
                 const tsCode = await response.text();
 
-                // Transpile TypeScript to JavaScript
+               
                 const jsCode = ts.transpile(tsCode, {
-                    module: ts.ModuleKind.None,  // Disable module system (to avoid CommonJS/ES6 modules)
-                    target: ts.ScriptTarget.ES5   // Transpile to ES5 for compatibility with browsers
+                    module: ts.ModuleKind.None, 
+                    target: ts.ScriptTarget.ES5  
                 });
 
-                // Create a new script tag to inject the transpiled JS into the document
                 const scriptTag = document.createElement('script');
                 scriptTag.type = 'text/javascript';
-                scriptTag.innerHTML = jsCode;  // Insert the transpiled JavaScript into the script tag
-                document.body.appendChild(scriptTag);  // Append the script tag to the body
+                scriptTag.innerHTML = jsCode; 
+                document.body.appendChild(scriptTag); 
             } catch (error) {
                 console.error('Error transpiling TypeScript:', error);
             }

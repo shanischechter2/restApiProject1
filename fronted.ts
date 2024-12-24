@@ -1,95 +1,148 @@
  function gets(){
     
-        axios.get('http://localhost:3001/items') // Ensure this URL matches your backend
+        axios.get('http://localhost:3001/items') 
             .then(response => {
             
-                const items = response.data as any[]; // Access the response data
+                const items = response.data as any[];
                 const list = document.getElementById('list') as HTMLUListElement;
-                list.innerHTML = ''; // Clear existing content
+                list.innerHTML = ''; 
     
                 items.forEach(item => {
                     const li = document.createElement('li');
-                    li.textContent = `ID: ${item.id}, Name: ${item.name}, balance: ${Number(item.balance)}`; // Adjust to match your item structure
+                    li.textContent = `ID: ${item.id}, Name: ${item.name}, balance: ${Number(item.balance)}`;
                     list.appendChild(li);
                 });
             })
             .catch(error => {
-                console.error('Error fetching items:', error); // Log any errors
+                console.error('Error fetching items:', error);
             });
     
 }
 
 function getsumall() {
-    axios.get('http://localhost:3001/items/getsum') // Ensure this URL matches your backend
+    axios.get('http://localhost:3001/items/getsum') 
         .then(response => {
         
-            const items = response.data as any[]; // Access the response data
+            const items = response.data as any[];
             const list = document.getElementById('list2') as HTMLUListElement;
-            list.innerHTML = ''; // Clear existing content
+            list.innerHTML = ''; 
             console.log(items);
             const l='SUM(balance)';
      
             items.forEach(item => {
                 const li = document.createElement('li');
                 li.textContent = `the sum of all users balances is:  ${item['SUM(balance)']}`;
-                console.log(li); // Adjust to match your item structure
+                console.log(li); 
                 list.appendChild(li);
             });
         })
         .catch(error => {
-            console.error('Error fetching items:', error); // Log any errors
+            console.error('Error fetching items:', error); 
         });
 
 }
 function adduser(){
     const inputbid=document.getElementById("useridadd") as HTMLInputElement;;
     const inputbname=document.getElementById("useradd") as HTMLInputElement;;
-    axios.post('http://localhost:3001/items', { id: inputbid.value, name: inputbname.value }) // Ensure this URL matches your backend
+    if(inputbid.value==='')
+    {
+       alert("you need to fill the id");
+        
+    }
+    if(inputbname.value==='')
+    {
+           alert("you need to fill the name");
+            
+    }else{
+        axios.post('http://localhost:3001/items', { id: inputbid.value, name: inputbname.value }) 
         .then(response => {
     
         })
         .catch(error => {
-            console.error('Error fetching items:', error); // Log any errors
+            console.error('Error fetching items:', error); 
         });
+    }
+    
 
 }
 function addMoneyuser() {
     const inputbid=document.getElementById("useridaddm") as HTMLInputElement;;
-    const inputbname=document.getElementById("useraddm") as HTMLInputElement;;
-    axios.post('http://localhost:3001/items/put', { id: inputbid.value, balance: Number(inputbname.value) }) // Ensure this URL matches your backend
+    const inputbadd=document.getElementById("useraddm") as HTMLInputElement;;
+    if(inputbid.value==='')
+        {
+           alert("you need to fill the id");
+            
+        }
+        if(inputbadd.value==='')
+            {
+               alert("you need to fill the amount you want to add to the user");
+                
+            }
+            else{
+                 axios.post('http://localhost:3001/items/put', { id: inputbid.value, balance: Number(inputbadd.value) }) 
         .then(response => {
     
         })
         .catch(error => {
-            console.error('Error fetching items:', error); // Log any errors
+            console.error('Error fetching items:', error);
         });
+            }
+   
 
 }
 function tran() {
-    const inputbid=document.getElementById("userid1m") as HTMLInputElement;;
-    const inputbname=document.getElementById("userid2m") as HTMLInputElement;;
-    const input=document.getElementById("m") as HTMLInputElement;;
-
-    axios.patch('http://localhost:3001/items', { id1: inputbid.value ,id2: inputbname.value, balance: Number(input.value) }) // Ensure this URL matches your backend
+    const inputbid1=document.getElementById("userid1m") as HTMLInputElement;;
+    const inputbid2=document.getElementById("userid2m") as HTMLInputElement;;
+    const inputtoadd=document.getElementById("amuonttotranc") as HTMLInputElement;;
+    if(inputbid1.value==='')
+        {
+         
+            inputbid1.setCustomValidity("Tyou need to fill the id");
+            inputbid1.reportValidity()
+        }else {
+            inputbid1.setCustomValidity(""); 
+        }
+        if(inputbid2.value==='')
+            {
+            
+                inputbid2.setCustomValidity("Tyou need to fill the second id");
+                inputbid2.reportValidity()
+            }else {
+                inputbid2.setCustomValidity(""); 
+            }
+     if(inputtoadd.value==='')
+         {
+            inputtoadd.setCustomValidity("Tyou need to fill the amuont you want to transfere");
+            inputtoadd.reportValidity() 
+                    
+        }else {
+            inputtoadd.setCustomValidity(""); 
+        }
+    axios.patch('http://localhost:3001/items', { id1: inputbid1.value ,id2: inputbid2.value, balance: Number(inputtoadd.value) }) 
         .then(response => {
      
         })
         .catch(error => {
-            console.error('Error fetching items:', error); // Log any errors
+            console.error('Error fetching items:', error); 
         });
 
 }
 function deleteuser()
 {
-    const inputbid=document.getElementById("deluser") as HTMLInputElement;;
+    const inputbid=document.getElementById("deluser") as HTMLInputElement;
+    if(inputbid.value==='')
+        {
+           alert("you need to fill the id");
+            
+        };
      axios.delete('http://localhost:3001/items', {
-        data: { id: inputbid.value.trim() } // Correct way to send data
-    } as any)  // Ensure this URL matches your backend
+        data: { id: inputbid.value.trim() } 
+    } as any)  
     .then(response => {
 
     })
     .catch(error => {
-        console.error('Error fetching items:', error); // Log any errors
+        console.error('Error fetching items:', error);
     });
 }
 (window as any).gets = gets;
