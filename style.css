@@ -1,13 +1,159 @@
-*{
-    margin: 0;
-    padding: 0;
- }
- 
- .container{
-     width: 100%;
-     min-height: 100vh;
-     background: linear-gradient(135deg,#81c8d0,#ffffff);
-     padding: 10px;
- 
- }
+/* Reset and Basic Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #1e1e2f;
+  color: #f4f4f9;
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  background: #27293d;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Box Styles */
+.box {
+  background: #343654;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Button Styles */
+button {
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  background: #4a4b69;
+  color: #f4f4f9;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #5c5d81;
+  transform: translateY(-3px);
+}
+
+/* Input Styles */
+input {
+  font-size: 14px;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #4a4b69;
+  border-radius: 5px;
+  background: #2d2f44;
+  color: #f4f4f9;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #5c5d81;
+  outline: none;
+}
+
+/* List Styles */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  padding: 12px;
+  font-size: 16px;
+  background: #3b3d5c;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+ul li:hover {
+  background: #4a4b69;
+}
+
+/* Search Section */
+.serch-app {
+  padding: 20px;
+  background: #343654;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.serch-app h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #f4f4f9;
+}
+
+.serch-app input {
+  margin-bottom: 15px;
+}
+
+/* Row Section */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #3b3d5c;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Hidden Lists */
+#list,
+#list2 {
+  display: none;
+}
+
+/* Add Transitions for Better UX */
+button,
+input {
+  transition: all 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+      padding: 10px;
+  }
+
+  .box {
+      padding: 15px;
+  }
+
+  button {
+      width: 100%;
+  }
+}
+
  
