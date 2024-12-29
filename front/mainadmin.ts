@@ -392,6 +392,15 @@ function tranadminfun() {
           }else {
               inputbid2.setCustomValidity(""); 
           }
+          if(inputbid2.value==inputbid1.value)
+            {
+            
+                inputbid2.setCustomValidity("you cant transfere to the same user");
+                inputbid2.reportValidity()
+                return;
+            }else {
+                inputbid2.setCustomValidity(""); 
+            }
    if(inputtoadd.value==='')
        {
           inputtoadd.setCustomValidity("Tyou need to fill the amuont you want to transfere");
