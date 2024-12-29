@@ -7,6 +7,22 @@
     const bgetuser = document.getElementById('getsp') as HTMLUListElement;
     const baddsp = document.getElementById('baddsp') as HTMLUListElement;
     const delsp = document.getElementById('delsp') as HTMLUListElement;
+    const transp = document.getElementById('transp') as HTMLUListElement;
+    transp.addEventListener('click', () => {
+      const list1 = document.getElementById('divtranmsp') as HTMLUListElement;
+      list1.classList.toggle('hidden');
+      
+     if (getComputedStyle(list1).display === 'none') {
+
+       list1.style.display = 'block';
+       serchtsp(localStorage.getItem('id') as string);
+      
+     } else {
+     
+      list1.style.display = 'none';
+     
+   }
+ });
     bgetuser.addEventListener('click', () => {
         const list1 = document.getElementById('usersp') as HTMLUListElement;
         list1.classList.toggle('hidden');
@@ -51,6 +67,59 @@ delsp.addEventListener('click', () => {
    
  }
 });
+function tranadminfunsp() {
+  // const inputbid1=document.getElementById("userid1adminm") as HTMLInputElement;;
+  const inputbid2=document.getElementById("userid2sp") as HTMLInputElement;;
+  const inputtoadd=document.getElementById("amuonttotrancsp") as HTMLInputElement;;
+  // if(inputbid1.value==='')
+  //     {
+       
+  //         inputbid1.setCustomValidity("Tyou need to fill the id");
+  //         inputbid1.reportValidity()
+  //         return;
+  //     }else {
+  //         inputbid1.setCustomValidity(""); 
+  //     }
+      if(inputbid2.value==='')
+          {
+          
+              inputbid2.setCustomValidity("Tyou need to fill the second id");
+              inputbid2.reportValidity()
+              return;
+          }else {
+              inputbid2.setCustomValidity(""); 
+          }
+          if(inputbid2.value===localStorage.getItem('id'))
+            {
+            
+                inputbid2.setCustomValidity("you cant transfer to yourself");
+                inputbid2.reportValidity()
+                return;
+            }else {
+                inputbid2.setCustomValidity(""); 
+            }
+   if(inputtoadd.value==='')
+       {
+          inputtoadd.setCustomValidity("Tyou need to fill the amuont you want to transfere");
+          inputtoadd.reportValidity() 
+          return;    
+                  
+      }else {
+          inputtoadd.setCustomValidity(""); 
+      }
+  axios.patch('http://localhost:3001/items', { id1: localStorage.getItem('id') ,id2: inputbid2.value, balance: Number(inputtoadd.value) }) 
+      .then(response => {
+         
+      })
+      .catch(error => {
+    
+              const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
+              alert(`${errorMessage}`);
+       
+         
+      });
+
+}
 function deleteusersp()
 {
     const inputbid=document.getElementById("delusersp") as HTMLInputElement;

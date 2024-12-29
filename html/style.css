@@ -211,7 +211,8 @@ ul li:hover {
 #divtranm,
 #divadd,
 #divdelap,
-#divaddap
+#divaddap,
+#divtranmsp
 {
   display: none;
 }
