@@ -6,7 +6,6 @@ const localStorage = new LocalStorage('./scratch');
 
 
 
-//const sqlite3 = require('sqlite3').verbose();
 var poin=false;
 
 const db = new sqlite3.Database('./database.db', (err) => {
@@ -21,16 +20,14 @@ db.serialize(() => {
 
  db.run("CREATE TABLE IF NOT EXISTS items (id TEXT PRIMARY KEY, name TEXT, balance INTEGER DEFAULT 0)");
 });
-//type Callback<T> = (error: Error | null, result: T | null) => void;
 
-//פעולה שמחזירה את כל האנשים בבנק עם id שם והיתרה 
 function getItems(callback: (error: Error | null, result: { id: string; name: string; balance: number }[] | null) => void) : void {
     db.all("SELECT * FROM items", [], (err, rows) => {
         if (err) {
             console.error("Error getting items:", err);
             return callback(err, null);
         }
-        console.log("Retrieved items:", rows);
+       
         callback(null, rows as { id: string; name: string; balance: number }[]);
     });
 }
@@ -54,7 +51,7 @@ function serch(
        callback(null, rows as { id: string; name: string; balance: number }[]);
     });
   }
-//פעולה שמחזירה את סכום כל היתרות בבנק
+
 function getsumallItems(callback: (error: Error | null, result: {  balance: number }[] | null) => void) : void{
     db.all("SELECT SUM(balance) FROM items", [], (err, row) => {
         if (err) {
@@ -64,7 +61,7 @@ function getsumallItems(callback: (error: Error | null, result: {  balance: numb
           
         } 
         db.all("SELECT * FROM items", [], (err, rows) => {
-            //console.log(rows);
+       
             if (err) {
                 console.error("Error getting items:", err);
                 return callback(err, null);
@@ -75,19 +72,19 @@ function getsumallItems(callback: (error: Error | null, result: {  balance: numb
                 return callback(new Error("No"), null);
 
             }
-            //console.log("Retrieved items:", rows);
+       
           
         });
         
-        console.log(row);
+      
         callback(null,  row as  { balance: number }[]);
-        //callback(null,  row as { id: string; name: string; balance: number }[]); 
+     
     });
 }
-//פעולה שמוסיפה אדם למערכת
+
 function addItem(id:string, name:string, callback: (error: Error | null, result: { id: string; name: string; balance: number }[] | null) => void) : void {
     const stmt = db.prepare("INSERT INTO items (id, name, balance) VALUES (?, ?, 0)");
-  //  const stmt2 = db.get("SELECT * FROM items WHERE id = ?", [id]);
+ 
    db.get("SELECT id FROM items WHERE id = ?", [id], (err, row) => {
     if (err) {
         console.error("Error fetching balance:", err);
@@ -112,7 +109,7 @@ function addItem(id:string, name:string, callback: (error: Error | null, result:
    });
 
 }
-//פעולה שמוסיפה סכום כסף למשתמש
+
 function addBlanToSpcUser(id:string, balance: number, callback: (error: Error | null, result: { id: string; balance: number }[] | null) => void) : void  {
     db.get("SELECT balance FROM items WHERE id = ?", [id], (err, row) => {
         if (err) {
@@ -138,7 +135,21 @@ function addBlanToSpcUser(id:string, balance: number, callback: (error: Error | 
         stmt.finalize();
     });
 }
-//פעולה שמעבירה כסף מאדם אחד לאחר
+function login(id:string, name: string, callback: (error: Error | null, result: { id: string; name: string }[] | null) => void) : void  {
+    db.get("SELECT COUNT(id) FROM items WHERE id = ? AND name = ?", [id,name], (err, row) => {
+        if (err) {
+            console.error("Error fetching balance:", err);
+            return callback(err, null);
+        }
+    
+        if ((row as { 'COUNT(id)': number })['COUNT(id)'] === 0)  {
+            return callback(new Error("No user found"), null);
+        }
+        
+        callback(null,null);
+    });
+}
+
 function transBlanToSpcUser(id1:string,id2:string, balance:number, callback: (error: Error | null, result: { id: string; balance: number }[] | null) => void) : void {
     
     db.get("SELECT balance FROM items WHERE id = ?", [id1], (err, row) => {
@@ -150,7 +161,6 @@ function transBlanToSpcUser(id1:string,id2:string, balance:number, callback: (er
             return callback(new Error("No user found to trans from with the specified ID."), null);
         }
       
-      //  let mavar: number = row.balance;
 
         db.get("SELECT balance FROM items WHERE id = ?", [id2], (err, row1) => {
             if (err) {
@@ -161,22 +171,20 @@ function transBlanToSpcUser(id1:string,id2:string, balance:number, callback: (er
                 return callback(new Error("No user found to trans to with the specified ID."), null);
             }
            
-           // let mavar: number = row.balance; 
+       
             const mavar: number = (row as { balance: number }).balance;
             const getb: number = (row1 as { balance: number }).balance;
-           // let getb: number = row1.balance;
+         
         
         if(mavar==0){
             return callback(new Error("No"), null);
         }
         const getb2=getb+balance;
          const m2=mavar-balance;
-        // console.log(mavar);
-       
-        // console.log(mavar);
+
         
-        const stmt = db.prepare("UPDATE items SET balance = ? WHERE id = ?");
-        stmt.run(m2, id1, function (err:Error) {
+        const updatefirstuser = db.prepare("UPDATE items SET balance = ? WHERE id = ?");
+        updatefirstuser.run(m2, id1, function (err:Error) {
             if (err) {
                 console.error("Error updating balance:", err);
                 return callback(err, null);
@@ -184,8 +192,8 @@ function transBlanToSpcUser(id1:string,id2:string, balance:number, callback: (er
 
            // callback(null,null);
         });
-        const stmt2 = db.prepare("UPDATE items SET balance = ? WHERE id = ?");
-        stmt2.run(getb2, id2, function (errerr:Error) {
+        const updatesecuser = db.prepare("UPDATE items SET balance = ? WHERE id = ?");
+        updatesecuser.run(getb2, id2, function (errerr:Error) {
             if (err) {
                 console.error("Error updating balance:", err);
                 return callback(err, null);
@@ -198,7 +206,7 @@ function transBlanToSpcUser(id1:string,id2:string, balance:number, callback: (er
        
     });
 }
-//פעולה שמוחקת אדם ספציפי רק עם היתרה שלו היא 0
+
 function deleteItem(id:string, callback: (error: Error | null, result: { id: string }[] | null) => void) : void
 {
     db.get("SELECT balance FROM items WHERE id = ?", [id], (err, row) => {
@@ -232,23 +240,4 @@ function deleteItem(id:string, callback: (error: Error | null, result: { id: str
 }
 
 
-// function deleteAllItems(callback) 
-// {
- 
-//     db.run("DELETE FROM items", function (err) {
-//         if (err)
-//        {
-//             console.error("Error deleting all items:", err);
-//             return callback(err);
-//         }
-//            poin=true;
- 
-          
-      
-//         callback(null); 
-       
-//     });    
-        
-// }
-
-module.exports = { getItems, addItem ,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,serch};
+module.exports = { getItems, addItem ,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,serch,login};

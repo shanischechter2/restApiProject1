@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/typescript@latest/lib/typescript.js"></script>
     <title>bank simulator</title>
 </head>
-<body>
+<body class="body">
 
 
     <div class="container">
@@ -24,22 +24,13 @@
             </td>
             <td>
                 <div >
-                    <button  id="clicktogetsum"  >Sum of users balances</button>
+                    <button  id="clicktogetsum" >Sum of users balances</button>
                   <ul id="list2"></ul>
                </div>
             </td>
         </tr>
     </table>
-   
-    <!-- <div>
-        
-            <button onclick="gets()">Get Users</button>
-     <ul id="list"></ul>
-     </div>
-    <div>
-         <button onclick="getsumall()">Sum of users balances</button>
-    <ul id="list2"></ul>
-    </div> -->
+
    
     
     <div >
@@ -83,7 +74,7 @@
         window.addEventListener('DOMContentLoaded', async () => {
             try {
          
-                const response = await fetch('fronted.ts');
+                const response = await fetch('../front/fronted.ts');
                 const tsCode = await response.text();
 
                

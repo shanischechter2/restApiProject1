@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/typescript@latest/lib/typescript.js"></script>
+    <title>SignUp page</title>
+</head>
+<body class="body2">
+    <div class="container2">
+        <input type="text" id="signupid" placeholder="id"/>
+        <input type="text" id="signupname" placeholder="name"/>
+        <button onclick="addusersignup()">Sign Up</button>
+       
+      </div>
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+      <script>
+          window.addEventListener('DOMContentLoaded', async () => {
+              try {
+           
+                  const response = await fetch('../front/signupfile.ts');
+                  const tsCode = await response.text();
+  
+                 
+                  const jsCode = ts.transpile(tsCode, {
+                      module: ts.ModuleKind.None, 
+                      target: ts.ScriptTarget.ES5  
+                  });
+  
+                  const scriptTag = document.createElement('script');
+                  scriptTag.type = 'text/javascript';
+                  scriptTag.innerHTML = jsCode; 
+                  document.body.appendChild(scriptTag); 
+              } catch (error) {
+                  console.error('Error transpiling TypeScript:', error);
+              }
+          });
+      </script>
+</body>
+</html>

@@ -1,23 +1,6 @@
 
-//   import { LocalStorage } from 'node-localstorage';
-//        const localStorage = new LocalStorage('./scratch');
-
-// import express, { Request, Response } from 'express';
-
-// //import express from 'express';
-// import bodyParser from 'body-parser';
-// import cors from 'cors';
-
-// //import { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,getusersover} from './database';
 
 
-// const { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,getusersover,serch} = require('./database'); 
-// const app = express();
-
-// app.use(bodyParser.json());
-// app.use(cors({
-//     origin: 'http://127.0.0.1:5500',
-// }));
 
  const bgetall = document.getElementById('clicktogetall') as HTMLUListElement;
  const bgetsum = document.getElementById('clicktogetsum') as HTMLUListElement;
@@ -38,7 +21,7 @@
 
 
     bgetsum.addEventListener('click', () => {
-                        //alert("zz");
+                      
                         
                          const list = document.getElementById('list2') as HTMLUListElement;
                         getsumall();
@@ -58,7 +41,7 @@
                     
 
       
-  //  import { myLocalStorage } from './scratch';                   
+                  
                        
  function gets(){
     
@@ -75,7 +58,7 @@
                     const li = document.createElement('li');
                     li.textContent = 'there is no users yet';
                     list.appendChild(li); 
-                   // list.innerHTML = ; 
+                
                 }
                 items.forEach(item => {
                     
@@ -117,7 +100,7 @@ function sercht() {
 
   
         const list = document.getElementById('listbysh') as HTMLUListElement;
-        list.innerHTML = ''; // Clear previous list items
+        list.innerHTML = ''; 
   
         items.forEach(item => {
           const li = document.createElement('li');
@@ -127,14 +110,13 @@ function sercht() {
       })
       .catch(error => {
         console.error(error.message);
-  
-        // // Check for 404 and display a user-friendly message
-        // if (error.response?.status === 404) {
-        //   alert("Item not found. Please check the ID and try again.");
-        // } else {
+
+        if (error.response?.status === 404) {
+          alert("Item not found. Please check the ID and try again.");
+        } else {
           const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
           alert(`${errorMessage}`);
-        //}
+        }
       });
   }
 
@@ -150,7 +132,7 @@ function getsumall() {
            
             const it=items[0];
              console.log( it['SUM(balance)']);
-          //  const v = === null;
+     
             if( it['SUM(balance)']==null) 
                 {
                     const li = document.createElement('li');
@@ -162,14 +144,14 @@ function getsumall() {
             items.forEach(item => {
                 const li = document.createElement('li');
                 li.textContent = `the sum of all users balances is:  ${item['SUM(balance)']}`;
-               // console.log(li); 
+          
                 list.appendChild(li);
                 
             });
           
         })
         .catch(error => {
-          //  console.error('Error fetching items:', error); 
+         
             const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
             alert(`${errorMessage}`);
         });
@@ -236,15 +218,10 @@ function adduser(){
     
         })
         .catch(error => {
-            //console.error('Error fetching items:', error); 
-            // if (error.response?.status === 400) {
-            //     alert("the id is in use by anather user");
-       
-            //   } else {
+      
                 const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
                 alert(`${errorMessage}`);
-              //}
-          //  alert(error.message);
+        
         });
     }
     
@@ -280,12 +257,12 @@ function addMoneyuser() {
         })
         .catch(error => {
          
-            //  if (error.response?.status === 404) {
-            //     alert("user not found. Please check the ID and try again.");
-            //   } else {
+             if (error.response?.status === 404) {
+                alert("user not found. Please check the ID and try again.");
+              } else {
                 const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
                 alert(`${errorMessage}`);
-             // }
+              }
         });
             }
    
@@ -327,16 +304,10 @@ function tran() {
            
         })
         .catch(error => {
-            // if (error.response?.status === 404) {
-            //     alert("No user found to trans to");
-            //   }
-            //   if(error.response?.status === 403){
-            //     alert("No user found to trans from");
-
-            //   } else {
+       
                 const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
                 alert(`${errorMessage}`);
-             // }
+             
            
         });
 

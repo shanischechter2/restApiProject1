@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/typescript@latest/lib/typescript.js"></script>
+    <title>login page</title>
+</head>
+<body class="body2">
+    <div class="container2">
+        <input type="password" id="loninid" placeholder="id"/>
+        <input type="text" id="loginname" placeholder="name"/>
+        <button onclick="login()">Login</button>
+        <a onclick="gotosingup()">Don't have an account yet?  Sign Up</a>
+       
+      </div>
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+      <script>
+          window.addEventListener('DOMContentLoaded', async () => {
+              try {
+           
+                  const response = await fetch('../front/loginfile.ts');
+                  const tsCode = await response.text();
+  
+                 
+                  const jsCode = ts.transpile(tsCode, {
+                      module: ts.ModuleKind.None, 
+                      target: ts.ScriptTarget.ES5  
+                  });
+  
+                  const scriptTag = document.createElement('script');
+                  scriptTag.type = 'text/javascript';
+                  scriptTag.innerHTML = jsCode; 
+                  document.body.appendChild(scriptTag); 
+              } catch (error) {
+                  console.error('Error transpiling TypeScript:', error);
+              }
+          });
+      </script>
+</body>
+</html>

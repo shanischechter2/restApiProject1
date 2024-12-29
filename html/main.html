@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://unpkg.com/typescript@latest/lib/typescript.js"></script>
+    <title>SignUp page</title>
+</head>
+<body class="body3">
+
+    <div>
+        <div class="container3">
+         <div >
+         <a class="a" id="hello"></a>
+        </div>
+   
+    <div >
+        <button id="getsp">Get User</button>
+        
+     </div>
+    <div>
+       <button id="baddsp">Deposit sum money to a specific user</button>
+     </div>
+     <div >
+      
+        <button id="delsp">Delete user</button>
+     </div>
+
+    </div>
+    </div>
+    
+    <div >
+         
+         <div class="container3">
+            
+        <div id="divdelapsp" class="hidden">
+            <a> delete user</a>
+            <input type="text" id="delusersp" placeholder="user id"/>
+            <button onclick="deleteusersp()">submit</button>
+        </div>
+        <div id="divaddapsp" class="hidden">
+            <a>add money</a>
+           
+            <input type="number" id="useraddmsp" placeholder="the amount to add"/>
+            <button onclick="addMoneyusersp()">submit</button>
+            
+       </div>
+        <ul class="hidden" id="usersp"></ul> 
+      
+     
+     
+    
+
+    </div>
+    
+   
+   
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+      <script>
+          window.addEventListener('DOMContentLoaded', async () => {
+              try {
+           
+                  const response = await fetch('../front/mainfile.ts');
+                  const tsCode = await response.text();
+  
+                 
+                  const jsCode = ts.transpile(tsCode, {
+                      module: ts.ModuleKind.None, 
+                      target: ts.ScriptTarget.ES5  
+                  });
+  
+                  const scriptTag = document.createElement('script');
+                  scriptTag.type = 'text/javascript';
+                  scriptTag.innerHTML = jsCode; 
+                  document.body.appendChild(scriptTag); 
+              } catch (error) {
+                  console.error('Error transpiling TypeScript:', error);
+              }
+          });
+      </script>
+</body>
+</html>

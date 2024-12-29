@@ -2,14 +2,14 @@
 
 import express, { Request, Response } from 'express';
 
-//import express from 'express';
+
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-//import { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,getusersover} from './database';
 
 
-const { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,getusersover,serch} = require('./database'); 
+
+const { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanToSpcUser,getsumallItems,getusersover,serch,login} = require('./back/database'); 
 
 
 
@@ -33,7 +33,7 @@ app.get('/items', (req: Request, res: Response) => {
     });
 });
 app.post('/items/get', (req: Request, res: Response) => {
-    const { id } = req.body as { id: string }; // Use string for consistency
+    const { id } = req.body as { id: string };
   
     serch(id, (err: Error | null, item: { id: string; name: string; balance: number }[] | null) => {
       if (err) {
@@ -43,11 +43,10 @@ app.post('/items/get', (req: Request, res: Response) => {
         }
   
        
-     //   console.error("Error in serch function:", err.message);
+   
         return res.status(500).json({ error: err.message });
       }
-  
-      // Return the item if found
+ 
       res.status(200).json(item);
     });
   });
@@ -73,12 +72,22 @@ app.get('/items/getsum', (req: Request, res: Response) => {
         res.json(items);
     });
 });
+app.post('/items/login', (req: Request, res: Response) => {
+    const { name,id } = req.body; 
+    login(id,name,(err: Error | null, items: any[]) => {
+        if (err) {
+            if (err.message === "No user found") {
+                return res.status(404).json({error:"No user found"});
+              }
+            return res.status(500).json({ error: "Failed items." });
+        }
+    
+        res.json(items);
+    });
+});
 app.get('/items/getb', (req: Request, res: Response) => {
     const { balance } = req.body as { balance: Number } ; 
 
-    // if (!balance) { 
-    //     return res.status(400).json({ error: "balance is required." });
-    // }
     getusersover(balance,(err: Error | null, items: any[]) => {
         if (err) {
             return res.status(500).json({ error: "Failed items." });
@@ -101,7 +110,7 @@ app.post('/items', (req: Request, res: Response) => {
               return res.status(500).json({ error: err.message });
             
             
-          //  return res.status(500).json({ error: "Failed to add item." });
+     
         }
         res.status(201).json(items);
     });

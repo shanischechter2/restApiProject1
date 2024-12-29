@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/typescript@latest/lib/typescript.js"></script>
+    <title>login page</title>
+</head>
+<body class="body3">
+
+   <div>
+    <div class="container3">
+        <div >
+           <a id="a2"></a>
+        </div>
+   
+        <div >
+           <button id="clicktogetalladmin" onclick="getall()">Get Users</button>
+           
+        </div>
+   
+        <div >
+           <button id="clicktogetsumadmin">Sum of users balances</button>
+          
+        </div>
+        <div >
+                
+            <button id="adduseradmin">Create a new user </button>
+           
+           </div>
+        
+        <div>
+       
+       
+        <button id="bdiposit">Deposit sum money to a specific user</button>
+     </div>
+     <div >
+      
+        <button id="bdeleteadmin">Delete user</button>
+     </div>
+     <div>
+       
+        <button id="tranadmin">transfer money from one user balance to another user</button>
+    </div>
+      </div>
+      <div class="container3">
+        <div id="divadd" class="hidden">
+            <a> add user</a>
+            <input type="text" id="useridaddadmina" placeholder="user id"/>
+            <input type="text" id="useraddadmina" placeholder="the name"/>
+            <button onclick="adduseradminfun2()">submit</button>
+        </div>
+        <div id="divdelm" class="hidden">
+            <a> delete user</a>
+            <input type="text" id="deluseradmin" placeholder="user id"/>
+            <button onclick="deleteuseradmin()">submit</button>
+        </div>
+        <div id="divaddm" class="hidden">
+            <a>add money</a>
+            <input type="text" id="useridaddm" placeholder="user id"/>
+            <input type="number" id="useraddm" placeholder="the amount to add"/>
+            <button onclick="addMoneyuseradmin()">submit</button>
+       </div>
+       <div id="divtranm" class="hidden">
+        <a>transfer money from one user balance to another </a>
+         <input type="text" id="userid1adminm" placeholder="user id1"/>
+        <input type="text" id="userid2adminm" placeholder="user id2"/>
+        <input type="number" id="amuonttotrancadmin" placeholder="the amount to add"/>
+        <button onclick="tranadminfun()">submit</button>
+       </div>
+         
+          <ul id="listusers"></ul> 
+          <ul id="listsum"></ul>
+          <ul id="addlistadmin"></ul>
+      </div>
+   
+      
+      
+      <div class="serch-app" >
+        <h2>search user</h2>
+        <div >
+          <input type="text" id="idtos" placeholder=""/>
+          <button onclick="serchtalladmin()">search</button>
+          <ul id="listbysh"></ul>
+        </div>
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+      <script>
+          window.addEventListener('DOMContentLoaded', async () => {
+              try {
+           
+                  const response = await fetch('../front/mainadmin.ts');
+                  const tsCode = await response.text();
+  
+                 
+                  const jsCode = ts.transpile(tsCode, {
+                      module: ts.ModuleKind.None, 
+                      target: ts.ScriptTarget.ES5  
+                  });
+  
+                  const scriptTag = document.createElement('script');
+                  scriptTag.type = 'text/javascript';
+                  scriptTag.innerHTML = jsCode; 
+                  document.body.appendChild(scriptTag); 
+              } catch (error) {
+                  console.error('Error transpiling TypeScript:', error);
+              }
+          });
+      </script>
+</body>
+</html>
