@@ -68,18 +68,10 @@ delsp.addEventListener('click', () => {
  }
 });
 function tranadminfunsp() {
-  // const inputbid1=document.getElementById("userid1adminm") as HTMLInputElement;;
+
   const inputbid2=document.getElementById("userid2sp") as HTMLInputElement;;
   const inputtoadd=document.getElementById("amuonttotrancsp") as HTMLInputElement;;
-  // if(inputbid1.value==='')
-  //     {
-       
-  //         inputbid1.setCustomValidity("Tyou need to fill the id");
-  //         inputbid1.reportValidity()
-  //         return;
-  //     }else {
-  //         inputbid1.setCustomValidity(""); 
-  //     }
+
       if(inputbid2.value==='')
           {
           
