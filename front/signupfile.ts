@@ -54,7 +54,7 @@ function addusersignup(){
     }else {
         signupname.setCustomValidity(""); 
     }
-        axios.post('http://localhost:3001/items', { id: signupid.value, name: signupname.value }) 
+        axios.post('http://localhost:3001/items', { id: signupid.value, name: signupname.value.trim() }) 
         .then(response => {
             const name = signupname.value;
             localStorage.setItem('name', name);

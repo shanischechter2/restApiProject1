@@ -249,7 +249,7 @@ function serchtalladmin() {
   }else {
       inputbnameadd.setCustomValidity(""); 
   }
-      axios.post('http://localhost:3001/items', { id: inputbidadd.value, name: inputbnameadd.value }) 
+      axios.post('http://localhost:3001/items', { id: inputbidadd.value, name: inputbnameadd.value.trim() }) 
       .then(response => {
   
       })
