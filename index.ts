@@ -5,6 +5,7 @@ import express, { Request, Response } from 'express';
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import path from 'path';
 
 
 
@@ -16,12 +17,25 @@ const { getItems, addItem, deleteAllItems,addBlanToSpcUser,deleteItem,transBlanT
 const app = express();
 
 
+app.use(cors());
 
-app.use(bodyParser.json());
-app.use(cors({
-    origin: 'http://127.0.0.1:5500',
-}));
+ app.use(bodyParser.json());
+// app.use(cors({
+//     origin: 'http://127.0.0.1:5500',
+// }));
 
+
+app.use(express.static(path.join(__dirname, 'html')));
+app.use(express.static(path.join(__dirname, 'front')));
+app.use(express.static(path.join(__dirname)));
+
+// Use the router from index.ts
+
+
+// Default route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'html/login.html'));
+});
 
 
 app.get('/items', (req: Request, res: Response) => {

@@ -355,9 +355,27 @@ function deleteuseradmin()
       alert("you cant delete the admin");
       return;
     }
+   const divsure = document.getElementById('besure') as HTMLUListElement;
+  //divsure.classList.toggle('hidden');
+    //getComputedStyle(divsure).display;
+    divsure.style.display = 'block';
+    //  if ( === 'none') {
 
-    
-     axios.delete('http://localhost:3001/items', {
+    //     divsure.style.display = 'block';
+       
+       
+    //   } else {
+ 
+    //     divsure.style.display = 'none';
+      
+
+    // }
+    const yes = document.getElementById('yesdel') as HTMLUListElement;
+    const no = document.getElementById('nodel') as HTMLUListElement;
+
+
+    yes.addEventListener('click', () => {
+                 axios.delete('http://localhost:3001/items', {
         data: { id: inputbid.value.trim() } 
     } as any)  
     .then(response => {
@@ -367,7 +385,14 @@ function deleteuseradmin()
         const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
         alert(`${errorMessage}`);
         
-    });
+    });        
+      });
+      no.addEventListener('click', () => {
+        const divdelete2 = document.getElementById('divdelm') as HTMLUListElement;
+        divdelete2.style.display = 'none';
+                    alert("no");   
+      });
+   
 }
 
 function tranadminfun() {

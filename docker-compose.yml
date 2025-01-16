@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./src:/app/src 
+      - ./node_modules:/app/node_modules 
+      - ./database.sqlite:/app/database.sqlite
+
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+
+
+
+

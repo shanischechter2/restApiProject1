@@ -46,6 +46,10 @@
             <a> delete user</a>
             <input type="text" id="delusersp" placeholder="user id"/>
             <button onclick="deleteusersp()">submit</button>
+            <div id="besuresp" class="hidden">
+                <button id="yesdelsp">yes</button>
+           <button id="nodelsp">n0</button>
+           </div>
         </div>
         <div id="divaddapsp" class="hidden">
             <a>add money</a>
@@ -56,11 +60,12 @@
        </div>
        <div id="divtranmsp" class="hidden">
         <a>transfer money from one user balance to another </a>
-         <!-- <input type="text" id="userid1sp" placeholder="user id1"/> -->
+       
         <input type="text" id="userid2sp" placeholder="user id2"/>
         <input type="number" id="amuonttotrancsp" placeholder="the amount to transfer"/>
         <button onclick="tranadminfunsp()">submit</button>
        </div>
+       
         <ul class="hidden" id="usersp"></ul> 
       
      

@@ -55,7 +55,7 @@
 });
 delsp.addEventListener('click', () => {
     const divdelapsp = document.getElementById('divdelapsp') as HTMLUListElement;
-   
+  
    if (getComputedStyle(divdelapsp).display === 'none') {
 
     divdelapsp.style.display = 'block';
@@ -129,22 +129,49 @@ function deleteusersp()
        alert("you cant delete user that is not you");
        return;
     }
+    const divsure = document.getElementById('besuresp') as HTMLUListElement;
 
+      divsure.style.display = 'block';
     
-     axios.delete('http://localhost:3001/items', {
-        data: { id: inputbid.value.trim() } 
-    } as any)  
-    .then(response => {
+      const yes = document.getElementById('yesdelsp') as HTMLUListElement;
+      const no = document.getElementById('nodelsp') as HTMLUListElement;
+  
+  
+      yes.addEventListener('click', () => {
+                   axios.delete('http://localhost:3001/items', {
+          data: { id: inputbid.value.trim() } 
+      } as any)  
+      .then(response => {
+  
+      })
+      .catch(error => {
+          const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
+          alert(`${errorMessage}`);
+          
+      });        
+        });
+        no.addEventListener('click', () => {
+          //const divdelete2 = document.getElementById('divdelmsp') as HTMLUListElement;
+          const divdelapsp2 = document.getElementById('divdelapsp') as HTMLUListElement;
+ 
+          divdelapsp2.style.display = 'none';
+                      alert("no");   
+        });
+    
+    //  axios.delete('http://localhost:3001/items', {
+    //     data: { id: inputbid.value.trim() } 
+    // } as any)  
+    // .then(response => {
       
-        window.location.href = 'login.html';
+    //     window.location.href = 'login.html';
       
 
-    })
-    .catch(error => {
-        const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
-        alert(`${errorMessage}`);
+    // })
+    // .catch(error => {
+    //     const errorMessage = error.response?.data?.error || error.message || "An unknown error occurred";
+    //     alert(`${errorMessage}`);
         
-    });
+    // });
 }
 
 function addMoneyusersp() {
